@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>formulaire</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h2>Formulaire</h2>
-    <form action="insert.php" method="post" >
-        Nom: <input type="text" nom="Nom" required>
-        Post-nom: <input type="text" postnom="postnom" required>
-        Promotion: <input type="text" promotion="promotion" required>
+    <form action="insert.php" method="post" class="form-container">
+        <label>Nom: <input type="text" name="Nom" required class="form-input"></label>
+        <label>Post-nom: <input type="text" name="postnom" required class="form-input"></label>
+        <label>Promotion: <input type="text" name="promotion" required class="form-input"></label>
 
-        <button type="button">Ajoute</button>
+        <button type="submit" class="form-button">Ajouter</button>
     </form>
 </body>
 </html>
