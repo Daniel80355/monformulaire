@@ -1,11 +1,5 @@
 <?php
-$conn = new mysqli("localhost", "root", "", "basededonnes");
-if ($conn->connect_error) {
-    die(json_encode(['status' => 'error', 'message' => 'Connexion échouée: ' . $conn->connect_error]));
-}
-
-// Set charset to utf8
-$conn->set_charset("utf8");
+include 'conn_BD.php';
 
 // Check if form data exists
 if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_POST['Nom'], $_POST['postnom'], $_POST['promotion'], $_POST['email'])) {
