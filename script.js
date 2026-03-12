@@ -29,6 +29,7 @@ function validateField(field) {
 
 // submit handler still performs full check
 form.addEventListener('submit', function(event) {
+    event.preventDefault();
     errorDiv.style.display = 'none';
     let valid = true;
     [...form.elements].forEach(el => {
@@ -38,10 +39,43 @@ form.addEventListener('submit', function(event) {
     });
 
     if (!valid) {
-        event.preventDefault();
         errorDiv.textContent = 'Merci de corriger les erreurs indiquées.';
         errorDiv.style.display = 'block';
         form.classList.add('shake');
         setTimeout(() => form.classList.remove('shake'), 500);
+        return;
     }
+
+    // Submit form data asynchronously
+    const formData = new FormData(form);
+    fetch('insert.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            errorDiv.style.backgroundColor = '#bbffbb';
+            errorDiv.style.color = '#228B22';
+            errorDiv.textContent = data.message;
+            errorDiv.style.display = 'block';
+            form.reset();
+            [...form.elements].forEach(el => {
+                if (el.tagName.toLowerCase() === 'input' && el.nextElementSibling) {
+                    el.nextElementSibling.textContent = '';
+                }
+            });
+        } else {
+            errorDiv.style.backgroundColor = '#ffbaba';
+            errorDiv.style.color = '#d8000c';
+            errorDiv.textContent = data.message;
+            errorDiv.style.display = 'block';
+        }
+    })
+    .catch(error => {
+        errorDiv.style.backgroundColor = '#ffbaba';
+        errorDiv.style.color = '#d8000c';
+        errorDiv.textContent = 'Erreur: ' + error.message;
+        errorDiv.style.display = 'block';
+    });
 });
