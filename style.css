@@ -20,6 +20,13 @@ body {
     width: 100%;
 }
 
+.form-container h2 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+}
+
 /* Labels and inputs */
 .form-container label {
     display: block;
@@ -34,6 +41,21 @@ body {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-input:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+    outline: none;
+}
+
+.field-error {
+    display: block;
+    color: #d8000c;
+    font-size: 0.9em;
+    margin-top: 3px;
+    height: 1em;
 }
 
 /* Submit button */
@@ -50,4 +72,25 @@ body {
 
 .form-button:hover {
     background-color: #45a049;
+}
+
+/* error message styling */
+.error-message {
+    color: #d8000c;
+    background-color: #ffbaba;
+    padding: 8px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    display: none;
+}
+
+/* shake animation for invalid form */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-10px); }
+    40%, 80% { transform: translateX(10px); }
+}
+
+.shake {
+    animation: shake 0.5s;
 }

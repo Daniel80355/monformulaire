@@ -5,14 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>formulaire</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
-    <h2>Formulaire</h2>
     <form action="insert.php" method="post" class="form-container">
-        <label>Nom: <input type="text" name="Nom" required class="form-input"></label>
-        <label>Post-nom: <input type="text" name="postnom" required class="form-input"></label>
-        <label>Promotion: <input type="text" name="promotion" required class="form-input"></label>
-
+        <h2>Formulaire</h2>
+        <label>Nom: <input type="text" name="Nom" required class="form-input"><span class="field-error"></span></label>
+        <label>Post-nom: <input type="text" name="postnom" required class="form-input"><span class="field-error"></span></label>
+        <label>Promotion: <input type="text" name="promotion" required class="form-input"><span class="field-error"></span></label>
+        <label>Email: <input type="email" name="email" required class="form-input"><span class="field-error"></span></label>
+        <div id="error-message" class="error-message"></div>
         <button type="submit" class="form-button">Ajouter</button>
     </form>
 </body>
