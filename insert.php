@@ -1,4 +1,11 @@
 <?php
+// Force JSON response
+header('Content-Type: application/json; charset=utf-8');
+
+// Debug logging
+error_log("DEBUG - REQUEST METHOD: " . $_SERVER['REQUEST_METHOD']);
+error_log("DEBUG - POST data: " . print_r($_POST, true));
+
 include 'conn_BD.php';
 
 // Check if form data exists
@@ -18,22 +25,11 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 }
 
 // Use prepared statement to prevent SQL injection
-$stmt = $conn->prepare("INSERT INTO etudiant (Nom, postnom, promotion, email) VALUES (?, ?, ?, ?)");
-
-if (!$stmt) {
-    die(json_encode(['status' => 'error', 'message' => 'Erreur de préparation: ' . $conn->error]));
-}
-
-// Bind parameters
-$stmt->bind_param("ssss", $nom, $postnom, $promotion, $email);
-
-// Execute query
-if ($stmt->execute()) {
+try {
+    $stmt = $conn->prepare("INSERT INTO etudiant (Nom, postnom, promotion, email) VALUES (?, ?, ?, ?)");
+    $stmt->execute([$nom, $postnom, $promotion, $email]);
     echo json_encode(['status' => 'success', 'message' => 'Nouvel enregistrement créé avec succès']);
-} else {
-    echo json_encode(['status' => 'error', 'message' => 'Erreur: ' . $stmt->error]);
+} catch (PDOException $e) {
+    echo json_encode(['status' => 'error', 'message' => 'Erreur: ' . $e->getMessage()]);
 }
-
-$stmt->close();
-$conn->close();
 ?>
